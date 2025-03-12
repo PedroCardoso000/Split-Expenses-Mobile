@@ -1,4 +1,4 @@
-# Welcome to your Expo app 👋
+# 📌 App: Despesas Compartilhadas (Split Expenses)
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
@@ -16,7 +16,15 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+💡 Descrição:
+Um aplicativo para registrar e dividir despesas entre amigos, ideal para viagens, eventos ou contas compartilhadas. Ele permite que os usuários adicionem despesas, escolham quem pagou e quem deve pagar, e o app calcula automaticamente o saldo de cada um.
+
+🔹 Nível: Iniciante a médio
+🔹 Tecnologias:
+✅ Frontend (React Native) – Interface do usuário
+✅ Backend (Spring Boot + PostgreSQL) – API para armazenar despesas
+✅ Banco de Dados (PostgreSQL ou Firebase Firestore) – Armazena informações sobre os usuários e despesas
+✅ Autenticação (JWT ou Firebase Auth) – Login e controle de usuário
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
