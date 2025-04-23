@@ -7,29 +7,28 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { api } from "../services/api";
 
 export default function CriarGrupo({ navigation }: any) {
   const [nomeGrupo, setNomeGrupo] = useState("");
 
-  const criarGrupo = async () => {
-    if (!nomeGrupo.trim()) {
-      Alert.alert("Erro", "Informe o nome do grupo.");
-      return;
-    }
+  // const criarGrupo = async () => {
+  //   if (!nomeGrupo.trim()) {
+  //     Alert.alert("Erro", "Informe o nome do grupo.");
+  //     return;
+  //   }
 
-    try {
-      await api.post("/grupos", {
-        nome: nomeGrupo,
-        criadoPorId: 1, // coloque aqui o ID do usuário logado
-      });
-      Alert.alert("Sucesso", "Grupo criado com sucesso!");
-      navigation.goBack();
-    } catch (error) {
-      console.error("Erro ao criar grupo:", error);
-      Alert.alert("Erro", "Não foi possível criar o grupo.");
-    }
-  };
+  //   try {
+  //     await axios.post("/grupos", {
+  //       nome: nomeGrupo,
+  //       criadoPorId: 1, // coloque aqui o ID do usuário logado
+  //     });
+  //     Alert.alert("Sucesso", "Grupo criado com sucesso!");
+  //     navigation.goBack();
+  //   } catch (error) {
+  //     console.error("Erro ao criar grupo:", error);
+  //     Alert.alert("Erro", "Não foi possível criar o grupo.");
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -40,7 +39,7 @@ export default function CriarGrupo({ navigation }: any) {
         value={nomeGrupo}
         onChangeText={setNomeGrupo}
       />
-      <TouchableOpacity style={styles.button} onPress={criarGrupo}>
+      <TouchableOpacity style={styles.button} >
         <Text style={styles.buttonText}>Criar Grupo</Text>
       </TouchableOpacity>
     </View>

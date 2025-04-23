@@ -6,24 +6,24 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { api } from "../services/api"; // ajuste o path se necessário
+// import { api } from "../api/axios"; // ajuste o path se necessário
 
 export default function HomeScreen({ navigation }: any) {
   const [groups, setGroups] = useState([]);
 
-  useEffect(() => {
-    // Exemplo de chamada à API (substituir ID pelo do usuário logado)
-    const fetchGroups = async () => {
-      try {
-        const response = await api.get("/grupos/usuario/1");
-        setGroups(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar grupos", error);
-      }
-    };
+  // useEffect(() => {
+  //   // Exemplo de chamada à API (substituir ID pelo do usuário logado)
+  //   const fetchGroups = async () => {
+  //     try {
+  //       const response = await api.get("/grupos/usuario/1");
+  //       setGroups(response.data);
+  //     } catch (error) {
+  //       console.error("Erro ao buscar grupos", error);
+  //     }
+  //   };
 
-    fetchGroups();
-  }, []);
+  //   fetchGroups();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }: any) {
 
       <FlatList
         data={groups}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item : any) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.groupItem}
