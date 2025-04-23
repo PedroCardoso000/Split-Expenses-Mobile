@@ -6,71 +6,129 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ScrollView,
 } from "react-native";
 
 export default function CriarGrupo({ navigation }: any) {
   const [nomeGrupo, setNomeGrupo] = useState("");
+  const [participantes, setParticipantes] = useState([""]);
 
-  // const criarGrupo = async () => {
-  //   if (!nomeGrupo.trim()) {
-  //     Alert.alert("Erro", "Informe o nome do grupo.");
-  //     return;
-  //   }
+  const adicionarCampo = () => {
+    setParticipantes([...participantes, ""]);
+  };
 
-  //   try {
-  //     await axios.post("/grupos", {
-  //       nome: nomeGrupo,
-  //       criadoPorId: 1, // coloque aqui o ID do usuário logado
-  //     });
-  //     Alert.alert("Sucesso", "Grupo criado com sucesso!");
-  //     navigation.goBack();
-  //   } catch (error) {
-  //     console.error("Erro ao criar grupo:", error);
-  //     Alert.alert("Erro", "Não foi possível criar o grupo.");
-  //   }
-  // };
+  const atualizarParticipante = (index: number, texto: string) => {
+    const novosParticipantes = [...participantes];
+    novosParticipantes[index] = texto;
+    setParticipantes(novosParticipantes);
+  };
+
+  const removerCampo = (index: number) => {
+    const novosParticipantes = participantes.filter((_, i) => i !== index);
+    setParticipantes(novosParticipantes);
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Criar Novo Grupo</Text>
+
+      <Text style={styles.label}>Nome do Grupo</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nome do grupo"
+        placeholder="Ex: Viagem para a Praia"
         value={nomeGrupo}
         onChangeText={setNomeGrupo}
       />
-      <TouchableOpacity style={styles.button} >
+
+      <Text style={styles.label}>Participantes</Text>
+      {participantes.map((nome, index) => (
+        <View key={index} style={styles.participanteContainer}>
+          <TextInput
+            style={styles.participanteInput}
+            placeholder={`Participante ${index + 1}`}
+            value={nome}
+            onChangeText={(text) => atualizarParticipante(index, text)}
+          />
+          {participantes.length > 1 && (
+            <TouchableOpacity onPress={() => removerCampo(index)}>
+              <Text style={styles.removerTexto}>Remover</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      ))}
+
+      <TouchableOpacity onPress={adicionarCampo}>
+        <Text style={styles.adicionarTexto}>+ Adicionar Participante</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Criar Grupo</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
     padding: 24,
     backgroundColor: "#fff",
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 24,
     textAlign: "center",
+    color: "#333",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 8,
+    color: "#333",
   },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 24,
+    backgroundColor: "#f9f9f9",
+  },
+  participanteContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  participanteInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 12,
     padding: 12,
-    marginBottom: 16,
+    backgroundColor: "#f9f9f9",
+  },
+  removerTexto: {
+    marginLeft: 12,
+    color: "#d9534f",
+    fontWeight: "600",
+  },
+  adicionarTexto: {
+    color: "#4CAF50",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 16,
+    fontSize: 16,
   },
   button: {
     backgroundColor: "#4CAF50",
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: "center",
+    marginTop: 16,
   },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });

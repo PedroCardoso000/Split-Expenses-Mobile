@@ -1,80 +1,119 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  StatusBar,
 } from "react-native";
-// import { api } from "../api/axios"; // ajuste o path se necessário
 
 export default function HomeScreen({ navigation }: any) {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState([
+    { id: 1, nome: "Viagem Cancún" },
+    { id: 2, nome: "Churrasco da Firma" },
+    { id: 3, nome: "Turma da Faculdade" },
+  ]);
 
-  // useEffect(() => {
-  //   // Exemplo de chamada à API (substituir ID pelo do usuário logado)
-  //   const fetchGroups = async () => {
-  //     try {
-  //       const response = await api.get("/grupos/usuario/1");
-  //       setGroups(response.data);
-  //     } catch (error) {
-  //       console.error("Erro ao buscar grupos", error);
-  //     }
-  //   };
-
-  //   fetchGroups();
-  // }, []);
+  const removerGrupo = (id: number) => {
+    setGroups(groups.filter((g) => g.id !== id));
+  };
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <Text style={styles.title}>Meus Grupos</Text>
 
       <FlatList
         data={groups}
-        keyExtractor={(item : any) => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 100 }}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.groupItem}
-            onPress={() =>
-              navigation.navigate("GrupoDetalhes", { grupoId: item.id })
-            }
-          >
-            <Text style={styles.groupName}>{item.nome}</Text>
-          </TouchableOpacity>
+          <View style={styles.groupWrapper}>
+            <TouchableOpacity
+              style={styles.groupCard}
+              onPress={() =>
+                navigation.navigate("GrupoDetalhes", { grupoId: item.id })
+              }
+              activeOpacity={0.85}
+            >
+              <Text style={styles.groupName}>{item.nome}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => removerGrupo(item.id)}>
+              <Text style={styles.deleteButton}>🗑️</Text>
+            </TouchableOpacity>
+          </View>
         )}
       />
 
       <TouchableOpacity
-        style={styles.button}
+        style={styles.floatingButton}
         onPress={() => navigation.navigate("CriarGrupo")}
       >
-        <Text style={styles.buttonText}>+ Novo Grupo</Text>
+        <Text style={styles.floatingButtonText}>+ Novo Grupo</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 24 },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 24,
+    paddingHorizontal: 20,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 20,
+    color: "#333",
     textAlign: "center",
   },
-  groupItem: {
-    padding: 16,
-    borderRadius: 8,
-    backgroundColor: "#f2f2f2",
+  groupWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 12,
   },
-  groupName: { fontSize: 18 },
-  button: {
-    backgroundColor: "#4CAF50",
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 24,
+  groupCard: {
+    flex: 1,
+    backgroundColor: "#f9f9f9",
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+  groupName: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#222",
+  },
+  deleteButton: {
+    fontSize: 20,
+    marginLeft: 12,
+    color: "#d9534f",
+  },
+  floatingButton: {
+    position: "absolute",
+    bottom: 30,
+    left: 20,
+    right: 20,
+    backgroundColor: "#4CAF50",
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 5,
+  },
+  floatingButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
 });

@@ -7,6 +7,7 @@ import CadastroScreen from "./src/pages/cadastroscreen";
 import HomeScreen from "./src/pages/homeScreen";
 import GrupoDetalhes from "./src/pages/grupoDetalhes";
 import CriarGrupo from "./src/pages/criarGrupo";
+import CriarDespesa from "./src/pages/criarDespesas";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,6 @@ export default function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
 
-    <GrupoDetalhes />
+    <CriarGrupo />
   );
 }
