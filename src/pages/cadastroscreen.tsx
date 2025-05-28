@@ -1,7 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { RootStackParamList } from '../../App';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
+export default function CadastroScreen() {
+const navigation = useNavigation<NavigationProps>();
 
-export default function CadastroScreen({ navigation } : any) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Criar Conta</Text>
@@ -16,7 +21,7 @@ export default function CadastroScreen({ navigation } : any) {
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Text style={styles.link}>Já tem uma conta? Entrar</Text>
       </TouchableOpacity>
     </View>
