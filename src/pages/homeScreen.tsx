@@ -7,8 +7,15 @@ import {
   StyleSheet,
   StatusBar,
 } from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../App";
 
-export default function HomeScreen({ navigation }: any) {
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
+
+export default function HomeScreen() {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
   const [groups, setGroups] = useState([
     { id: 1, nome: "Viagem Cancún" },
     { id: 2, nome: "Churrasco da Firma" },
@@ -33,7 +40,7 @@ export default function HomeScreen({ navigation }: any) {
             <TouchableOpacity
               style={styles.groupCard}
               onPress={() =>
-                navigation.navigate("GrupoDetalhes", { grupoId: item.id })
+                navigation.navigate("GrupoDetalhes", { grupoDetalhe: item.id })
               }
               activeOpacity={0.85}
             >

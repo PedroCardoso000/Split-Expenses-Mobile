@@ -11,24 +11,68 @@ import CriarDespesa from "./src/pages/criarDespesas";
 
 const Stack = createNativeStackNavigator();
 
+/**
+ * Componente principal da aplica o, que renderiza o navigation container e
+ * define as telas que ser o renderizadas
+ * 
+ * As telas definidas s o:
+ * - Login: tela de login
+ * - Cadastro: tela de cadastro de usu rio
+ * - Home: tela principal, lista os grupos do usu rio
+ * - GrupoDetalhes: tela de detalhes de um grupo
+ * - CriarGrupo: tela de criar um novo grupo
+ * - CriarDespesa: tela de criar uma nova despesa
+ * 
+ * @returns JSX.Element
+ */
+
+export type RootStackParamList = {
+  Login: undefined;
+  Cadastro: undefined;
+  Home: undefined;
+  GrupoDetalhes: {grupoDetalhe: number};
+  CriarGrupo: undefined;
+  CriarDespesa: undefined;
+};
+
+
 export default function App() {
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Login">
-    //     <Stack.Screen
-    //       name="Login"
-    //       component={LoginScreen}
-    //       options={{ title: "Entrar" }}
-    //     />
-    //     <Stack.Screen
-    //       name="Cadastro"
-    //       component={CadastroScreen}
-    //       options={{ title: "Cadastro" }}
-    //     />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{  headerShown: false }}
+        />
+        <Stack.Screen
+          name="Cadastro"
+          component={CadastroScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GrupoDetalhes"
+          component={(grupoDetalhe: any) => GrupoDetalhes(grupoDetalhe)}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CriarGrupo"
+          component={CriarGrupo}
+          options={{ headerShown: false  }}
+        />
+        <Stack.Screen
+          name="CriarDespesa"
+          component={CriarDespesa}
+          options={{ headerShown: false  }}
+        />
         
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+      </Stack.Navigator>
+    </NavigationContainer>
 
-    <CriarGrupo />
   );
 }

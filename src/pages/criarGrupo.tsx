@@ -1,3 +1,4 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import {
   View,
@@ -8,8 +9,13 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
+import { RootStackParamList } from "../../App";
+import { useNavigation } from "@react-navigation/native";
 
-export default function CriarGrupo({ navigation }: any) {
+type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
+
+export default function CriarGrupo() {
+  const navigation = useNavigation<NavigationProps>();
   const [nomeGrupo, setNomeGrupo] = useState("");
   const [participantes, setParticipantes] = useState([""]);
 
@@ -61,7 +67,7 @@ export default function CriarGrupo({ navigation }: any) {
         <Text style={styles.adicionarTexto}>+ Adicionar Participante</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Home")}>
         <Text style={styles.buttonText}>Criar Grupo</Text>
       </TouchableOpacity>
     </ScrollView>
