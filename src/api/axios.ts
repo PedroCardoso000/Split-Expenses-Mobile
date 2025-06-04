@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const api = axios.create({
   // baseURL: "https://petconnectbackend-r2ldr42g.b4a.run/", // URL DA API
-  baseURL: " http://192.168.15.9:8080/",
+  baseURL: " http://ec2-3-21-134-188.us-east-2.compute.amazonaws.com/api/v1/",
   headers: {
     "Content-Type": "application/json",
   },

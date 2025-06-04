@@ -8,6 +8,7 @@ import HomeScreen from "./src/pages/homeScreen";
 import GrupoDetalhes from "./src/pages/grupoDetalhes";
 import CriarGrupo from "./src/pages/criarGrupo";
 import CriarDespesa from "./src/pages/criarDespesas";
+import { AuthProvider } from "./src/contexts/AuthContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +31,7 @@ export type RootStackParamList = {
   Login: undefined;
   Cadastro: undefined;
   Home: undefined;
-  GrupoDetalhes: {grupoDetalhe: number};
+  GrupoDetalhes: { grupoDetalhe: number };
   CriarGrupo: undefined;
   CriarDespesa: undefined;
 };
@@ -38,41 +39,43 @@ export type RootStackParamList = {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{  headerShown: false }}
-        />
-        <Stack.Screen
-          name="Cadastro"
-          component={CadastroScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="GrupoDetalhes"
-          component={(grupoDetalhe: any) => GrupoDetalhes(grupoDetalhe)}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CriarGrupo"
-          component={CriarGrupo}
-          options={{ headerShown: false  }}
-        />
-        <Stack.Screen
-          name="CriarDespesa"
-          component={CriarDespesa}
-          options={{ headerShown: false  }}
-        />
-        
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Cadastro"
+            component={CadastroScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GrupoDetalhes"
+            component={(grupoDetalhe: any) => GrupoDetalhes(grupoDetalhe)}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CriarGrupo"
+            component={CriarGrupo}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CriarDespesa"
+            component={CriarDespesa}
+            options={{ headerShown: false }}
+          />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
 
   );
 }
