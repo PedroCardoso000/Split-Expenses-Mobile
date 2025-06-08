@@ -11,11 +11,15 @@ import {
 } from "react-native";
 import { RootStackParamList } from "../../App";
 import { useNavigation } from "@react-navigation/native";
+import { api } from "../api/axios";
+import { useAuth } from "../contexts/AuthContext";
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 export default function CriarGrupo() {
   const navigation = useNavigation<NavigationProps>();
+  const { user } = useAuth();
+
   const [nomeGrupo, setNomeGrupo] = useState("");
   const [participantes, setParticipantes] = useState([""]);
 
@@ -32,6 +36,36 @@ export default function CriarGrupo() {
   const removerCampo = (index: number) => {
     const novosParticipantes = participantes.filter((_, i) => i !== index);
     setParticipantes(novosParticipantes);
+  };
+
+  const criarGrupo = async () => {
+    if (!nomeGrupo.trim() || participantes.some((p) => !p.trim())) {
+      Alert.alert("Preencha todos os campos");
+      return;
+    }
+
+    const body = {
+      name: nomeGrupo,
+      participants: participantes.map((nome) => ({ name: nome })),
+    };
+
+    try {
+      const response = await api.post("/group", body, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      });
+
+      if (response.status === 201) {
+        Alert.alert("Grupo criado com sucesso!");
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Erro ao criar grupo");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Erro ao se comunicar com o servidor");
+    }
   };
 
   return (
@@ -67,7 +101,7 @@ export default function CriarGrupo() {
         <Text style={styles.adicionarTexto}>+ Adicionar Participante</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Home")}>
+      <TouchableOpacity style={styles.button} onPress={criarGrupo}>
         <Text style={styles.buttonText}>Criar Grupo</Text>
       </TouchableOpacity>
     </ScrollView>
